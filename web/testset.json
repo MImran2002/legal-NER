@@ -1,0 +1,11 @@
+[
+    {
+      "tokens": ["John", "Doe", "filed", "against", "Acme", "Corporation", "in", "California", "."],
+      "labels": ["B-PER", "I-PER", "O", "O", "B-ORG", "I-ORG", "O", "B-LOC", "O"]
+    },
+    {
+      "tokens": ["Nick", "Hamilton", "sued", "America", "in", "California", "."],
+      "labels": ["B-PER", "I-PER", "O", "B-ORG", "O", "B-LOC", "O"]
+    }
+  ]
+  

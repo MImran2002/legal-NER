@@ -1,0 +1,6 @@
+transformers==4.43.3
+tensorflow-macos==2.16.1
+tensorflow-metal==1.1.0
+tensorflowjs==4.17.0
+datasets==2.20.0
+numpy==1.26.4

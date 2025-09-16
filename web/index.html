@@ -1,0 +1,69 @@
+<!-- web/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>LegalBERT NER (TF.js)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    :root {
+      --bg: #0b0f14; --panel: #121821; --muted: #8aa0b2; --ink: #e8eef5;
+      --chip: #1a2432; --border: #223044; --accent: #3aa6ff;
+      --o:#7f8c8d; --per:#ff6b6b; --org:#ffd166; --loc:#06d6a0; --law:#4dabf7; --case:#c792ea;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:24px;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    h1{font-size:20px;margin:0 0 16px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;max-width:1000px;margin:0 auto 16px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    textarea{width:100%;min-height:110px;resize:vertical;padding:12px 14px;border-radius:12px;background:#0f1520;border:1px solid var(--border);color:var(--ink);outline:none}
+    .row{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    button{appearance:none;border:1px solid var(--border);background:var(--chip);color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:600;cursor:pointer}
+    button:hover{border-color:var(--accent)}
+    #status,#eval-status{color:var(--muted)}
+    .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .tag{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:var(--chip);color:var(--muted);font-size:12px}
+    .swatch{width:10px;height:10px;border-radius:3px}
+    .output{padding:14px;border-radius:12px;background:#0f1520;border:1px solid var(--border);min-height:64px;line-height:2.1;word-wrap:break-word;margin-top:12px;white-space:pre-wrap}
+    @media (max-width:640px){.row{flex-wrap:wrap}button{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>LegalBERT NER (TensorFlow.js)</h1>
+    <textarea id="input" placeholder="Paste a legal sentence… e.g., John Doe filed a complaint against Acme Corporation in California."></textarea>
+    <div class="row">
+      <span id="status">loading model…</span>
+      <button id="run">Run NER</button>
+      <button onclick="__runBaselineCold()">Run Baseline (Cold)</button>
+      <button onclick="__runBaselineWarm()">Run Baseline (Warm)</button>
+      <button onclick="__runPreoptBaseline()">Run Pre-Optimization Baseline (all)</button>
+      <button onclick="window.clearModelCaches()">Reset model cache</button>
+    </div>
+    <pre id="output" class="output"></pre>
+    <pre id="eval-status"></pre>
+    <pre id="summary"></pre>
+    <div id="tables"></div>
+
+    <div class="legend" aria-hidden="true">
+      <span class="tag"><span class="swatch" style="background:var(--per)"></span> PERSON</span>
+      <span class="tag"><span class="swatch" style="background:var(--org)"></span> ORG</span>
+      <span class="tag"><span class="swatch" style="background:var(--loc)"></span> LOC</span>
+      <span class="tag"><span class="swatch" style="background:var(--law)"></span> LAW</span>
+      <span class="tag"><span class="swatch" style="background:var(--case)"></span> CASE</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+  <script>
+    (async () => {
+      await tf.io.removeModel('indexeddb://legalbert').catch(()=>{});
+      await tf.io.removeModel('indexeddb://legalbert-fp16').catch(()=>{});
+      console.log('Cleared old model caches');
+    })();
+  </script>
+
+  <!-- Load app first (defines __loadNERModel), then baseline -->
+  <script src="app.js"></script>
+  <script src="./benchmarks/baseline.js"></script>
+</body>
+</html>
