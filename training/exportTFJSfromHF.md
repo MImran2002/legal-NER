@@ -8,7 +8,7 @@ This allows you to run advanced NLP directly in the browser — no server requir
 
 ---
 
-## 🔄 Conversion Pipeline
+## Conversion Pipeline
 
 The export process works in four main steps:
 
