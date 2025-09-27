@@ -6,3 +6,11 @@ training/**/keras_saved_model/
 *.safetensors
 *.data-00000-of-00001
 training/mini_legalbert_ner_tf/keras_saved_model/
+
+# Model artifacts
+training/**/keras_saved_model/
+*.h5
+*.ckpt*
+*.tflite
+*.bin
+*.safetensors
