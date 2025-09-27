@@ -14,3 +14,11 @@ training/**/keras_saved_model/
 *.tflite
 *.bin
 *.safetensors
+
+# Model artifacts
+training/**/keras_saved_model/
+*.h5
+*.ckpt*
+*.tflite
+*.bin
+*.safetensors
